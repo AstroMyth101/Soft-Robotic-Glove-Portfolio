@@ -1,0 +1,33 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build outputs
+build/
+dist/
+*.hex
+*.elf
+*.bin
+*.map
+
+# Arduino temporary files
+*.tmp
+*.bak
+
+# Logs and raw data
+logs/raw/
+*.csv
+*.log
+
+# Personal or sensitive files
+private/
+secrets/
+*.key
+*.pem
+*.env
