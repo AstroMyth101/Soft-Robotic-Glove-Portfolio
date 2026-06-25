@@ -37,9 +37,14 @@ target angle -> flex sensor feedback -> control command -> pneumatic actuation -
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | System modules, software structure, and data/control flow |
 | [`docs/CONTROL_STRATEGY.md`](docs/CONTROL_STRATEGY.md) | Proportional control concept and shared-air pneumatic limitations |
 | [`docs/SAFETY_AND_VALIDATION.md`](docs/SAFETY_AND_VALIDATION.md) | Safety boundaries, validation levels, and bring-up sequence |
+| [`docs/VALIDATION_CHECKLIST.md`](docs/VALIDATION_CHECKLIST.md) | Bench checklist derived from the current controller firmware |
+| [`docs/CALIBRATION_WORKSHEET.md`](docs/CALIBRATION_WORKSHEET.md) | Flex-sensor calibration worksheet for the Mega 2560 branch |
 | [`docs/PIN_MAP_MEGA2560.md`](docs/PIN_MAP_MEGA2560.md) | Public wiring summary for the minimal Arduino Mega 2560 branch |
+| [`samples/sample_serial_log.csv`](samples/sample_serial_log.csv) | Representative serial CSV sample using the current firmware schema |
+| [`firmware_snippets/control_loop_excerpt.cpp`](firmware_snippets/control_loop_excerpt.cpp) | Public-safe excerpt of the proportional control loop |
 | [`docs/LIMITATIONS_AND_FUTURE_WORK.md`](docs/LIMITATIONS_AND_FUTURE_WORK.md) | Known limitations and planned engineering upgrades |
 | [`docs/PRIVATE_REPO_POLICY.md`](docs/PRIVATE_REPO_POLICY.md) | What is intentionally not included here and why |
+| [`CHANGELOG.md`](CHANGELOG.md) | Public portfolio change history |
 
 ---
 
