@@ -1,10 +1,13 @@
 # Soft Robotic Glove Portfolio
 
+![Soft Robotic Glove Portfolio banner](assets/linkedin-thumbnail.jpg)
+
 Public engineering portfolio for a **soft robotic glove controller** developed at **Sultan Qaboos University (SQU)**.
 
-This repository summarizes the system architecture, control concept, wiring, validation workflow, and documentation style for a bench-stage electropneumatic controller project.
+This repository summarizes the system architecture, control strategies, wiring, validation workflow, telemetry tooling, and documentation style for a bench-stage electropneumatic controller project.
 
 > **Status:** Bench-validation engineering prototype  
+> **Human testing:** NOT APPROVED — this is an engineering research prototype, not a medical device  
 > **Primary focus:** Embedded control, electropneumatic actuation, sensor feedback, and engineering documentation
 
 ---
@@ -19,7 +22,7 @@ The controller drives a five-finger soft pneumatic glove using:
 - five normally-open 2/2 finger isolation valves
 - pressure and vacuum pumps driven through motor-driver hardware
 - serial telemetry and LCD feedback in the minimal bench branch
-- richer ESP32/ESP32-S3 firmware lines for logging, Wi-Fi, dashboard, and safety architecture work
+- a structured ESP32-S3 firmware line with FSM + PI control, latched faults, SD logging, and a Wi-Fi dashboard
 
 The core engineering loop is:
 
@@ -29,19 +32,58 @@ target angle -> flex sensor feedback -> control command -> pneumatic actuation -
 
 ---
 
+## Firmware lines at a glance
+
+| Line | Board | Identity | Control | Status |
+|---|---|---|---|---|
+| Bench-validated baseline | Arduino Mega 2560 | `VAA0.0.5.2_Mega2560_SimpleRefined` | Proportional-only, average angle | **Bench-validated (L1–L3)** |
+| Full controller | ESP32-S3 | `V008.7.1` | 7-state FSM + PI, latched faults | Development / reference |
+| Simplified | ESP32-S3 | `VAA0.0.4.4` | Proportional-only | Bench branch |
+| Legacy | ESP32-S3 | legacy proportional line | Worst-unfinished-finger | Superseded |
+
+Full comparison: [`docs/FIRMWARE_LINES.md`](docs/FIRMWARE_LINES.md) · ESP32-S3 architecture: [`docs/ESP32S3_CONTROLLER_OVERVIEW.md`](docs/ESP32S3_CONTROLLER_OVERVIEW.md)
+
+---
+
+## Runnable evidence
+
+The `tools/` folder contains the host-side analysis tooling used on the bench,
+runnable directly against the sample logs committed here — no hardware needed:
+
+```text
+# check a captured log against the firmware's 25-column CSV contract
+python tools/validate_csv_schema.py samples/sample_serial_log.csv
+
+# per-finger step-response metrics (SSE, rise time, overshoot, settling)
+python tools/analyze_flex_response.py samples/sample_serial_log.csv
+
+# five-finger control-law simulator (needs numpy; GUI needs matplotlib)
+python tools/soft_robotics_hand_sim.py --selftest
+```
+
+The validator and analyzer are standard-library-only. Details in [`tools/README.md`](tools/README.md).
+
+---
+
 ## Repository map
 
 | Path | Purpose |
 |---|---|
 | [`docs/PROJECT_BRIEF.md`](docs/PROJECT_BRIEF.md) | High-level problem, scope, requirements, and contribution summary |
-| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | System modules, software structure, and data/control flow |
+| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | System modules, pneumatic architecture, valve truth table, data/control flow |
+| [`docs/FIRMWARE_LINES.md`](docs/FIRMWARE_LINES.md) | Comparison of all firmware lines and version naming |
+| [`docs/ESP32S3_CONTROLLER_OVERVIEW.md`](docs/ESP32S3_CONTROLLER_OVERVIEW.md) | Full controller: FSM state diagram, PI control, fault model, safety layers, telemetry |
 | [`docs/CONTROL_STRATEGY.md`](docs/CONTROL_STRATEGY.md) | Proportional control concept and shared-air pneumatic limitations |
 | [`docs/SAFETY_AND_VALIDATION.md`](docs/SAFETY_AND_VALIDATION.md) | Safety boundaries, validation levels, and bring-up sequence |
+| [`docs/BENCH_VALIDATION_SUMMARY.md`](docs/BENCH_VALIDATION_SUMMARY.md) | What was and was not validated on the bench |
 | [`docs/VALIDATION_CHECKLIST.md`](docs/VALIDATION_CHECKLIST.md) | Bench checklist derived from the current controller firmware |
 | [`docs/CALIBRATION_WORKSHEET.md`](docs/CALIBRATION_WORKSHEET.md) | Flex-sensor calibration worksheet for the Mega 2560 branch |
 | [`docs/PIN_MAP_MEGA2560.md`](docs/PIN_MAP_MEGA2560.md) | Public wiring summary for the minimal Arduino Mega 2560 branch |
-| [`samples/sample_serial_log.csv`](samples/sample_serial_log.csv) | Representative serial CSV sample using the current firmware schema |
 | [`firmware_snippets/control_loop_excerpt.cpp`](firmware_snippets/control_loop_excerpt.cpp) | Public-safe excerpt of the proportional control loop |
+| [`firmware_snippets/esp32s3_state_machine_excerpt.cpp`](firmware_snippets/esp32s3_state_machine_excerpt.cpp) | Public-safe excerpt of the ESP32-S3 FSM, fault latch, and safety guards |
+| [`samples/sample_serial_log.csv`](samples/sample_serial_log.csv) | Representative serial CSV sample, Mega 25-column schema (dummy data) |
+| [`samples/sample_esp32s3_session_log.csv`](samples/sample_esp32s3_session_log.csv) | Representative session log, ESP32-S3 20-column schema (dummy data) |
+| [`tools/`](tools/) | Runnable CSV validator, step-response analyzer, and control-law simulator |
 | [`docs/LIMITATIONS_AND_FUTURE_WORK.md`](docs/LIMITATIONS_AND_FUTURE_WORK.md) | Known limitations and planned engineering upgrades |
 | [`docs/PRIVATE_REPO_POLICY.md`](docs/PRIVATE_REPO_POLICY.md) | What is intentionally not included here and why |
 | [`CHANGELOG.md`](CHANGELOG.md) | Public portfolio change history |
@@ -50,7 +92,7 @@ target angle -> flex sensor feedback -> control command -> pneumatic actuation -
 
 ## Current public baseline
 
-The public documentation focuses on the **minimal proportional bench controller** line:
+The bench-validation claims in this portfolio refer to the **minimal proportional bench controller** line:
 
 ```text
 Firmware VAA0.0.5.2_Mega2560_SimpleRefined
@@ -59,7 +101,17 @@ Control: proportional-only, average-angle feedback
 Telemetry: USB Serial CSV + 16x2 I2C LCD + optional MPU6050
 ```
 
-This line was kept intentionally simple for demonstration and bench validation. It is not the full feature-rich ESP32-S3 research controller.
+This line was kept intentionally simple for demonstration and bench validation.
+
+Validation snapshot (details in [`docs/BENCH_VALIDATION_SUMMARY.md`](docs/BENCH_VALIDATION_SUMMARY.md)):
+
+| Level | Meaning | Status |
+|---|---|---|
+| L1 | Compile / static review | Completed |
+| L2 | Bench electronics | Demonstrated |
+| L3 | Pneumatic bench | Demonstrated |
+| L4 | Integrated bench reliability | Not fully validated |
+| L5 | Human testing | **NOT APPROVED** |
 
 ---
 
@@ -88,11 +140,12 @@ This portfolio demonstrates practical work in:
 
 - embedded C/C++ firmware design
 - Arduino / ESP32 / ESP32-S3 / AVR-style development
-- finite-state control concepts
-- proportional feedback control
+- finite-state machine design with latched fault handling
+- proportional and PI feedback control (with anti-windup)
 - pneumatic actuation and valve logic
 - sensor calibration and signal interpretation
-- serial telemetry and bench logging
+- serial telemetry, CSV schema contracts, and bench logging
+- host-side analysis tooling (Python) and control-law simulation
 - wiring documentation and validation planning
 - engineering communication
 

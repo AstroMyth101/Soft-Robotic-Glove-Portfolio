@@ -34,6 +34,41 @@ flowchart LR
 
 ---
 
+## Pneumatic architecture
+
+One shared pressure path and one shared vacuum path serve all five fingers.
+The central 3/2 valve selects which source feeds the shared manifold; each
+finger has a normally-open 2/2 isolation valve between the manifold and its
+actuator.
+
+```mermaid
+flowchart LR
+    PP[Pressure pump] --> CV{Central 3/2 valve}
+    VP[Vacuum pump] --> CV
+    CV --> M[Shared manifold]
+    M --> V1[2/2 valve F1] --> A1[Finger 1 actuator]
+    M --> V2[2/2 valve F2] --> A2[Finger 2 actuator]
+    M --> V3[2/2 valve F3] --> A3[Finger 3 actuator]
+    M --> V4[2/2 valve F4] --> A4[Finger 4 actuator]
+    M --> V5[2/2 valve F5] --> A5[Finger 5 actuator]
+```
+
+### Valve truth table
+
+| Valve | Command LOW / OFF | Command HIGH / ON |
+|---|---|---|
+| Central 3/2 selector | Vacuum / opening path | Pressure / flexion path |
+| Finger 2/2 (normally open) | Open flow | Closed / isolated |
+
+Two consequences follow directly from this hardware:
+
+1. The safe de-energized state is vacuum path selected and all fingers venting
+   — a power loss never traps a flexed hand.
+2. The controller can isolate fingers that reached their target, but it cannot
+   inflate one finger while vacuuming another or regulate per-finger pressure.
+
+---
+
 ## Minimal controller data flow
 
 ```text
@@ -60,7 +95,7 @@ The minimal public baseline is deliberately simple:
 - no PID or PI loop
 - no large fault framework
 
-The richer private controller lines use a more structured firmware style with scheduler, state model, logging, and dashboard support. This repository documents the public-safe architecture without dumping the full development branch.
+The richer controller lines use a more structured firmware style with scheduler, state model, logging, and dashboard support. That architecture is documented in [`ESP32S3_CONTROLLER_OVERVIEW.md`](ESP32S3_CONTROLLER_OVERVIEW.md) without dumping the full development branch.
 
 ---
 

@@ -15,12 +15,20 @@
 
 ## Short-term improvements
 
-1. Add a public-safe block diagram image.
-2. Add sanitized photos of the bench setup.
-3. Add a small sample CSV log with fake or redacted values.
-4. Add a short demonstration video link.
-5. Add a simplified firmware excerpt, not the full private firmware.
-6. Add a calibration worksheet.
+Delivered in this repository:
+
+- ~~System and pneumatic block diagrams~~ — Mermaid diagrams in [`ARCHITECTURE.md`](ARCHITECTURE.md)
+- ~~State diagram~~ — FSM diagram in [`ESP32S3_CONTROLLER_OVERVIEW.md`](ESP32S3_CONTROLLER_OVERVIEW.md)
+- ~~Sample CSV logs with dummy values~~ — both schemas under [`../samples/`](../samples/)
+- ~~Simplified firmware excerpts~~ — two excerpts under [`../firmware_snippets/`](../firmware_snippets/)
+- ~~Calibration worksheet~~ — [`CALIBRATION_WORKSHEET.md`](CALIBRATION_WORKSHEET.md)
+- ~~Validation summary~~ — [`BENCH_VALIDATION_SUMMARY.md`](BENCH_VALIDATION_SUMMARY.md)
+- ~~Runnable telemetry tooling~~ — [`../tools/`](../tools/)
+
+Still open:
+
+1. Add sanitized photos of the bench setup.
+2. Add a short demonstration video link.
 
 ---
 
@@ -59,15 +67,14 @@ The rule stays the same: control logic must respect the real pneumatic hardware.
 
 ## Documentation upgrades
 
-This public portfolio should eventually include:
+Now included: system overview and pneumatic diagrams, a state diagram, a
+calibration worksheet, a validation checklist and summary, sample telemetry in
+both CSV schemas, and runnable analysis tooling.
 
-- system overview diagram
-- wiring diagram
-- state diagram
-- calibration guide
-- validation checklist
-- sample telemetry
-- release notes
-- short project demo video
+Still to come:
+
+- a drawn wiring diagram (the wiring is currently documented as tables)
+- release notes for future public milestones
+- a short project demo video
 
 A good engineering portfolio should show the work, not merely claim the work.

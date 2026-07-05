@@ -25,6 +25,9 @@ logs/raw/
 *.csv
 *.log
 
+# Curated public sample logs are tracked
+!samples/*.csv
+
 # Personal or sensitive files
 private/
 secrets/
