@@ -38,7 +38,7 @@ Before applying actuator power:
 
 ## Hardware protection expected for serious testing
 
-A serious pneumatic test setup should include:
+Bench test hardware should include:
 
 - pressure regulation
 - over-pressure relief
@@ -82,4 +82,4 @@ USB upload
 -> integrated bench test
 ```
 
-Do not jump straight to full-system operation. That is how debugging becomes archaeology.
+Keep actuator power disconnected until the signal-level checks are complete.

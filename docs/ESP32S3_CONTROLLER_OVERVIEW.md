@@ -155,6 +155,4 @@ Additional interfaces:
 | Interfaces | Serial CLI + LCD | Serial CLI + LCD + Wi-Fi dashboard |
 | Validation | Bench-validated (L1–L3) | Development / reference |
 
-The Mega branch stays deliberately minimal for demonstration; this line is
-where the structured firmware engineering lives. See
-[`FIRMWARE_LINES.md`](FIRMWARE_LINES.md) for the full line-by-line comparison.
+The ESP32-S3 development line adds the scheduler, fault model, session logging, and network interfaces. Its validation status is separate from the Mega baseline. See [`FIRMWARE_LINES.md`](FIRMWARE_LINES.md) for the full comparison.

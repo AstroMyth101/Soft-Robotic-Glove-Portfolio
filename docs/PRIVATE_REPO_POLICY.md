@@ -1,60 +1,23 @@
-# Private Repository Policy
+# Publication Scope
 
-## Why this public repo exists
+The development repository contains the full firmware and internal engineering records. This public mirror documents selected architecture, interfaces, and bench-validation work; it is not a full firmware release.
 
-The main development work contains experimental firmware, detailed logs, internal iteration history, and project-specific notes. Publishing everything directly would make the public profile noisy and harder to review.
+## Included material
 
-This repository is the curated public layer.
+- Hardware and pneumatic architecture diagrams
+- Wiring summaries and controller descriptions
+- Selected firmware excerpts
+- Calibration and validation procedures
+- Synthetic telemetry examples and host-side analysis tools
+- Documented limitations and pending validation
 
-It is meant to show:
+## Not included
 
-- what the system is
-- how the architecture works
-- what the wiring looks like
-- what the control strategy is
-- what was validated at bench level
-- what the limitations are
-- what skills the project demonstrates
+- Complete firmware sources and development history
+- Raw internal test logs and administrative records
+- Unreleased experimental implementations
+- Private project notes or personal contact information
 
----
+## Publication criteria
 
-## What is intentionally not included
-
-This public portfolio does not include:
-
-- full private firmware history
-- raw internal logs
-- sensitive administrative documents
-- unfiltered chat exports
-- unfinished experimental branches
-- private project management notes
-- personal contact details beyond public GitHub identity
-
----
-
-## What can be shown publicly
-
-Good public-safe material includes:
-
-- architecture diagrams
-- sanitized wiring tables
-- short firmware excerpts
-- validation checklists
-- sample telemetry with dummy data
-- screenshots of dashboards or serial plots
-- lessons learned
-- future work plan
-
----
-
-## Recommended public-release rule
-
-Before adding anything to this repository, ask:
-
-1. Does it help someone understand the engineering?
-2. Does it avoid exposing sensitive data?
-3. Is it accurate for the current hardware version?
-4. Does it avoid overclaiming validation?
-5. Would it make sense to a recruiter, professor, or engineer reviewing the project?
-
-If the answer is yes, it belongs here.
+Material should be technically accurate, suitable for public distribution, and tied to the correct hardware and firmware version. Validation claims must distinguish demonstrated bench behavior from untested or future capabilities.

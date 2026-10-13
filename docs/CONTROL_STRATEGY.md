@@ -45,18 +45,10 @@ The hardware has one shared pressure path and one shared vacuum path. Because of
 - apply a different pressure to each finger
 - infer contact force from flex readings alone
 
-Valid control must respect the pneumatic hardware. The software cannot create hardware channels that do not exist.
+Valve isolation does not provide independent pressure regulation.
 
 ---
 
-## Why proportional-only was used
+## Control trade-off
 
-The proportional branch was made for clear bench demonstration:
-
-- easy to explain
-- easy to tune
-- easy to debug
-- lightweight on an Arduino Mega 2560
-- suitable for showing target-angle feedback behavior
-
-More advanced branches can add PI/PID, pressure sensors, filtered estimation, or model-based control later. The simple branch keeps the first principle visible.
+The Mega 2560 branch uses proportional control to establish a simple bench reference. Its steady-state error and response depend on the pneumatic plant and gain settings; the ESP32-S3 line implements PI control with anti-windup.

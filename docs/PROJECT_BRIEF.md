@@ -11,9 +11,7 @@
 
 ## Problem
 
-A soft pneumatic glove controller must make motion measurable, controllable, repeatable, and observable.
-
-The controller reads finger-bending feedback, computes a command from the angle error, drives pump hardware, routes airflow through a shared manifold, and records telemetry for bench analysis.
+The controller estimates finger angles using flex sensors and adjusts a shared pressure/vacuum circuit in response to angle error. Serial telemetry supports bench inspection and analysis.
 
 ---
 
@@ -40,10 +38,5 @@ It demonstrates the core loop:
 angle target -> measured angle -> proportional error -> actuator command
 ```
 
-This branch is intentionally readable and avoids unnecessary complexity.
+The baseline excludes the ESP32-S3 line's scheduler, logging, and fault-management features.
 
----
-
-## Contribution focus
-
-This portfolio highlights work in embedded firmware, pneumatic valve logic, motor-driver interfacing, sensor calibration, serial telemetry, hardware bring-up planning, and engineering documentation.

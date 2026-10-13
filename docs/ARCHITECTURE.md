@@ -62,8 +62,8 @@ flowchart LR
 
 Two consequences follow directly from this hardware:
 
-1. The safe de-energized state is vacuum path selected and all fingers venting
-   — a power loss never traps a flexed hand.
+1. De-energizing selects the vacuum path and opens the finger isolation valves.
+   Actual pressure relief must be verified on the assembled pneumatic circuit.
 2. The controller can isolate fingers that reached their target, but it cannot
    inflate one finger while vacuuming another or regulate per-finger pressure.
 
@@ -86,7 +86,7 @@ Two consequences follow directly from this hardware:
 
 ## Firmware style
 
-The minimal public baseline is deliberately simple:
+The Mega 2560 baseline excludes:
 
 - no Wi-Fi
 - no WebSocket dashboard
@@ -95,16 +95,5 @@ The minimal public baseline is deliberately simple:
 - no PID or PI loop
 - no large fault framework
 
-The richer controller lines use a more structured firmware style with scheduler, state model, logging, and dashboard support. That architecture is documented in [`ESP32S3_CONTROLLER_OVERVIEW.md`](ESP32S3_CONTROLLER_OVERVIEW.md) without dumping the full development branch.
+The ESP32-S3 line adds a scheduler, state machine, fault handling, logging, and a dashboard. See [`ESP32S3_CONTROLLER_OVERVIEW.md`](ESP32S3_CONTROLLER_OVERVIEW.md).
 
----
-
-## Why this architecture is useful
-
-The architecture separates three problems that are often mixed together:
-
-1. **Sensing:** estimate finger position.
-2. **Control:** decide pressure, vacuum, or hold.
-3. **Actuation:** command pumps and valves safely during bench tests.
-
-That separation makes the system easier to debug, explain, and extend.

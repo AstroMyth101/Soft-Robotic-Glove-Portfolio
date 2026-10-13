@@ -4,7 +4,7 @@
 
 Public engineering portfolio for a **soft robotic glove controller** developed at **Sultan Qaboos University (SQU)**.
 
-This repository summarizes the system architecture, control strategies, wiring, validation workflow, telemetry tooling, and documentation style for a bench-stage electropneumatic controller project.
+This repository documents the control architecture, wiring, firmware variants, bench validation, and analysis tools.
 
 > **Status:** Bench-validation engineering prototype  
 > **Human testing:** NOT APPROVED — this is an engineering research prototype, not a medical device  
@@ -45,10 +45,9 @@ Full comparison: [`docs/FIRMWARE_LINES.md`](docs/FIRMWARE_LINES.md) · ESP32-S3 
 
 ---
 
-## Runnable evidence
+## Analysis tools
 
-The `tools/` folder contains the host-side analysis tooling used on the bench,
-runnable directly against the sample logs committed here — no hardware needed:
+The `tools/` directory contains CSV validation, step-response analysis, and a control-law simulator. The committed sample logs contain dummy data and do not establish hardware performance:
 
 ```text
 # check a captured log against the firmware's 25-column CSV contract
@@ -101,7 +100,7 @@ Control: proportional-only, average-angle feedback
 Telemetry: USB Serial CSV + 16x2 I2C LCD + optional MPU6050
 ```
 
-This line was kept intentionally simple for demonstration and bench validation.
+The Mega baseline uses a proportional control loop without the ESP32-S3 line's additional features.
 
 Validation snapshot (details in [`docs/BENCH_VALIDATION_SUMMARY.md`](docs/BENCH_VALIDATION_SUMMARY.md)):
 
@@ -115,7 +114,7 @@ Validation snapshot (details in [`docs/BENCH_VALIDATION_SUMMARY.md`](docs/BENCH_
 
 ---
 
-## Pneumatic reality
+## Pneumatic constraints
 
 The current pneumatic hardware uses a shared pressure/vacuum source. That means the system can:
 
@@ -130,24 +129,16 @@ It cannot:
 - regulate independent pressure for each finger
 - estimate force from flex sensors alone
 
-This distinction matters. A controller that ignores the pneumatic hardware is not a controller; it is fiction with GPIO pins.
+These constraints follow from the shared pneumatic circuit and cannot be removed through firmware changes alone.
 
 ---
 
-## Skills demonstrated
+## Engineering scope
 
-This portfolio demonstrates practical work in:
-
-- embedded C/C++ firmware design
-- Arduino / ESP32 / ESP32-S3 / AVR-style development
-- finite-state machine design with latched fault handling
-- proportional and PI feedback control (with anti-windup)
-- pneumatic actuation and valve logic
-- sensor calibration and signal interpretation
-- serial telemetry, CSV schema contracts, and bench logging
-- host-side analysis tooling (Python) and control-law simulation
-- wiring documentation and validation planning
-- engineering communication
+- Arduino Mega 2560 and ESP32-S3 firmware: sensor acquisition, proportional/PI control, state machines, and fault handling
+- Pump drivers, pneumatic valve sequencing, and flex-sensor calibration
+- Serial telemetry, CSV validation, step-response analysis, and control-law simulation in Python
+- Wiring documentation and bench-validation procedures
 
 ---
 

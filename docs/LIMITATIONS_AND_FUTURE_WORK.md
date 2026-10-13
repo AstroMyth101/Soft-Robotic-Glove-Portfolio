@@ -13,22 +13,9 @@
 
 ---
 
-## Short-term improvements
+## Portfolio materials
 
-Delivered in this repository:
-
-- ~~System and pneumatic block diagrams~~ — Mermaid diagrams in [`ARCHITECTURE.md`](ARCHITECTURE.md)
-- ~~State diagram~~ — FSM diagram in [`ESP32S3_CONTROLLER_OVERVIEW.md`](ESP32S3_CONTROLLER_OVERVIEW.md)
-- ~~Sample CSV logs with dummy values~~ — both schemas under [`../samples/`](../samples/)
-- ~~Simplified firmware excerpts~~ — two excerpts under [`../firmware_snippets/`](../firmware_snippets/)
-- ~~Calibration worksheet~~ — [`CALIBRATION_WORKSHEET.md`](CALIBRATION_WORKSHEET.md)
-- ~~Validation summary~~ — [`BENCH_VALIDATION_SUMMARY.md`](BENCH_VALIDATION_SUMMARY.md)
-- ~~Runnable telemetry tooling~~ — [`../tools/`](../tools/)
-
-Still open:
-
-1. Add sanitized photos of the bench setup.
-2. Add a short demonstration video link.
+The repository includes architecture and state diagrams, firmware excerpts, dummy CSV samples, calibration and validation documents, and Python analysis tools. Bench photographs and a demonstration video have not been published.
 
 ---
 
@@ -61,7 +48,7 @@ Possible control improvements:
 - repeatability analysis from logs
 - automated calibration routines
 
-The rule stays the same: control logic must respect the real pneumatic hardware.
+Any changes must account for the shared pressure/vacuum manifold.
 
 ---
 
@@ -77,4 +64,3 @@ Still to come:
 - release notes for future public milestones
 - a short project demo video
 
-A good engineering portfolio should show the work, not merely claim the work.
